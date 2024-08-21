@@ -1,0 +1,130 @@
+{
+  "reviews": [
+    {
+      "professor": "Dr. Alice Johnson",
+      "subject": "Introduction to Psychology",
+      "stars": 4,
+      "review": "Engaging lectures and thoughtful discussions. However, the grading can be a bit strict."
+    },
+    {
+      "professor": "Dr. Bob Smith",
+      "subject": "Organic Chemistry",
+      "stars": 3,
+      "review": "Knowledgeable but the course is very challenging. Office hours are limited."
+    },
+    {
+      "professor": "Dr. Clara White",
+      "subject": "American History",
+      "stars": 5,
+      "review": "Fantastic lecturer with a passion for the subject. Makes history come alive."
+    },
+    {
+      "professor": "Dr. David Lee",
+      "subject": "Calculus II",
+      "stars": 2,
+      "review": "Difficult to follow and doesn’t provide enough examples. Needs to be more approachable."
+    },
+    {
+      "professor": "Dr. Emily Davis",
+      "subject": "Microeconomics",
+      "stars": 4,
+      "review": "Clear explanations and interactive classes. Could use more real-world applications."
+    },
+    {
+      "professor": "Dr. Frank Martin",
+      "subject": "Biology 101",
+      "stars": 5,
+      "review": "Very engaging and enthusiastic. Makes complex concepts easy to understand."
+    },
+    {
+      "professor": "Dr. Grace Thompson",
+      "subject": "Philosophy",
+      "stars": 3,
+      "review": "Interesting topics but sometimes disorganized. Could benefit from more structured lectures."
+    },
+    {
+      "professor": "Dr. Henry Garcia",
+      "subject": "World Literature",
+      "stars": 4,
+      "review": "Great at facilitating discussions and providing insightful analysis. Assignments are a bit heavy."
+    },
+    {
+      "professor": "Dr. Irene Martinez",
+      "subject": "Statistics",
+      "stars": 5,
+      "review": "Excellent teaching style with lots of practical examples. Always available for help."
+    },
+    {
+      "professor": "Dr. James Wilson",
+      "subject": "Introduction to Sociology",
+      "stars": 3,
+      "review": "Decent lectures but sometimes lacks depth. Course material could be more engaging."
+    },
+    {
+      "professor": "Dr. Karen Clark",
+      "subject": "Environmental Science",
+      "stars": 4,
+      "review": "Passionate about the subject and provides good real-world applications. Could improve feedback on assignments."
+    },
+    {
+      "professor": "Dr. Liam Lewis",
+      "subject": "Calculus I",
+      "stars": 4,
+      "review": "Very helpful and approachable. Explains difficult concepts clearly."
+    },
+    {
+      "professor": "Dr. Maria Young",
+      "subject": "Political Science",
+      "stars": 3,
+      "review": "Knowledgeable but sometimes lectures can be a bit dry. More interactive sessions would be helpful."
+    },
+    {
+      "professor": "Dr. Nathan Allen",
+      "subject": "Finance",
+      "stars": 5,
+      "review": "Incredibly knowledgeable with a real-world focus. Provides excellent career advice."
+    },
+    {
+      "professor": "Dr. Olivia King",
+      "subject": "Computer Science",
+      "stars": 4,
+      "review": "Great at explaining complex coding concepts. Could improve on providing timely feedback on projects."
+    },
+    {
+      "professor": "Dr. Paul Walker",
+      "subject": "Astrophysics",
+      "stars": 3,
+      "review": "Fascinating subject but the course can be quite challenging. More help sessions would be beneficial."
+    },
+    {
+      "professor": "Dr. Quinn Scott",
+      "subject": "Art History",
+      "stars": 4,
+      "review": "Knowledgeable and enthusiastic. Provides lots of interesting insights into various art periods."
+    },
+    {
+      "professor": "Dr. Rachel Adams",
+      "subject": "Introduction to Programming",
+      "stars": 5,
+      "review": "Excellent instructor with clear, step-by-step explanations. Very supportive of students."
+    },
+    {
+      "professor": "Dr. Steven Carter",
+      "subject": "Advanced Statistics",
+      "stars": 2,
+      "review": "Very challenging course with a fast pace. Needs to offer more support and clarification."
+    },
+    {
+      "professor": "Dr. Tina Evans",
+      "subject": "Sociology of Family",
+      "stars": 4,
+      "review": "Provides a lot of real-life examples and is very approachable. Could use more varied assessments."
+    },
+    {
+      "professor": "Dr. Ursula Bell",
+      "subject": "Cultural Anthropology",
+      "stars": 5,
+      "review": "Highly engaging and knowledgeable. Encourages critical thinking and discussion."
+    }
+  ]
+}
