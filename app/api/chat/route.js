@@ -38,24 +38,30 @@ Remember, your goal is to make it easy for students to find the best professors 
 
 export async function POST(req) {
   const data = await req.json()
-  const pc = new Pinecone({
+  const pc = new Pinecone({ // create pinecone instance
     apiKey: process.env.PINECONE_API_KEY,
   })
-  const index = pc.index('rag').namespace('ns1')
-  
-  const text = data[data.length - 1].content
-  const embedding = await OpenAI.embeddings.create({
+  const index = pc.index('rag').namespace('ns1') // get index from pinecone
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+  })
+  const text = data[data.length - 1].content // get user message
+
+  // create embedding with the user message
+  const embedding = await openai.embeddings.create({
     model: 'text-embedding-3-small',
     input: text,
     encoding_format: 'float',
   })
 
+  // query data that aligns with the message's embeddings
   const results = await index.query({
     topK: 3,
     includeMetadata: true,
     vector: embedding.data[0].embedding
   })
 
+  // return string format
   let resultString = '\n\nReturned results from vector db (done automatically): '
   results.matches.forEach((match) => {
     resultString += `
@@ -67,10 +73,11 @@ export async function POST(req) {
     `
   })
 
+  // format message for completion
   const lastMessage = data[data.length - 1]
   const lastMessageContent = lastMessage.content + resultString
   const lastDataWithoutLastMessage = data.slice(0, data.length - 1)
-  const completion = await OpenAI.chat.completions.create({
+  const completion = await openai.chat.completions.create({
     messages: [
       {role: 'system', content: systemPrompt},
       ...lastDataWithoutLastMessage,
@@ -80,12 +87,14 @@ export async function POST(req) {
     stream: true,
   })
 
+
+  // convert message into bytes
   const stream = new ReadableStream({
     async start(controller) {
       const encoder = new TextEncoder()
       try {
         for await (const chunk of completion) {
-          const content = chunk.choices[0]?.delta.content
+          const content = chunk.choices[0]?.delta?.content
           if (content) {
             const text = encoder.encode(content)
             controller.enqueue(text)
