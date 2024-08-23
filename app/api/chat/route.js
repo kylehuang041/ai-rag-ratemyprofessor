@@ -80,8 +80,8 @@ export async function POST(req) {
     stream: false
   });
 
-  console.log(JSON.parse(newReviewResponse.choices[0]?.message?.content))
 
+  // parse openai response to get new reviews
   let new_reviews = null;
   if (newReviewResponse.choices[0]?.message?.content) {
     try {
@@ -91,15 +91,18 @@ export async function POST(req) {
     }
   }
 
+  // Upsert new reviews to Pinecone index
   if (new_reviews.length > 0) {
     const processed_data = []
     for (const rev of new_reviews) {
+      // use openai to create embeddings for the new reviews
       const response = await openai.embeddings.create({
         model: 'text-embedding-3-small',
         input: rev.review,
         encoding_format: 'float'
       });
       const embeddings = response.data[0].embedding;
+      // push data (id, embeddings, and metadata) into processed_data array
       processed_data.push({
         id: rev.professor,
         values: embeddings,
@@ -110,10 +113,7 @@ export async function POST(req) {
         }
       });
     }
-    await index.upsert({
-      vectors: processed_data,
-      namespace: 'ns1'
-    });
+    await index.upsert(processed_data); // upsert new reviews into pinecone
   }
 
   // Return string format
