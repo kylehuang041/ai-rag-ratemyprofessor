@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { Box, Stack, TextField, Button } from "@mui/material";
 
@@ -8,10 +7,14 @@ export default function Home() {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content: "Hi! I'm the Rate My Professor support assistant. How can I help you today?",
+      content:
+        "Hi! I'm the Rate My Professor support assistant. How can I help you today?",
     },
   ]);
   const [message, setMessage] = useState("");
+  const [professorLink, setProfessorLink] = useState("");
+
+  // Function to send a message
   const sendMessage = async () => {
     setMessages((messages) => [
       ...messages,
@@ -38,18 +41,41 @@ export default function Home() {
         if (done) {
           return result;
         }
-        const text = decoder.decode(value || new Uint8Array(), { stream: true})
+        const text = decoder.decode(value || new Uint8Array(), {
+          stream: true,
+        });
 
         // Update messages with the complete response
         setMessages((messages) => {
           const lastMessage = messages[messages.length - 1];
           const otherMessages = messages.slice(0, messages.length - 1);
-          return [...otherMessages, { ...lastMessage, content: lastMessage.content + text }];
+          return [
+            ...otherMessages,
+            { ...lastMessage, content: lastMessage.content + text },
+          ];
         });
 
         return reader.read().then(processText);
       });
     });
+  };
+
+  const submitProfessorLink = async () => {
+    const response = await fetch("/api/submit-professor-link", {
+      method: "POST",
+      heards: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ link: professorLink }),
+    });
+
+    if (response.ok) {
+      alert("Professor link submitted successfully");
+    } else {
+      alert("Failed to submit professor link");
+    }
+
+    setProfessorLink("");
   };
 
   return (
@@ -69,7 +95,13 @@ export default function Home() {
         p={2}
         spacing={3}
       >
-        <Stack direction="column" spacing={2} flexGrow={1} overflow={"auto"} maxHeight={"100%"}>
+        <Stack
+          direction="column"
+          spacing={2}
+          flexGrow={1}
+          overflow={"auto"}
+          maxHeight={"100%"}
+        >
           {messages.map((message, index) => (
             <Box
               key={index}
@@ -102,6 +134,17 @@ export default function Home() {
           />
           <Button variant="contained" onClick={sendMessage}>
             Send
+          </Button>
+        </Stack>
+        <Stack direction="row" spacing={2} mt={2}>
+          <TextField
+            label="Professor Link"
+            fullWidth
+            value={professorLink}
+            onChange={(e) => setProfessorLink(e.target.value)}
+          />
+          <Button variant="contained" onClick={submitProfessorLink}>
+            Submit
           </Button>
         </Stack>
       </Stack>
