@@ -45,13 +45,29 @@ export async function POST(req) {
     // Process each review to create embeddings and prepare data for Pinecone
     const processedData = [];
     
+    async function analyzeSentiment(review) {
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You are a helpful assistant that provides sentiment analysis." },
+          { role: "user", content: `Analyze the sentiment of this review: ${review}. Please respond only with one word, either positive, neutral, or negative.` }
+        ],
+        max_tokens: 1,
+      });
+      const sentiment = response.choices[0].message.content;
+      console.log("Sentiment:", sentiment);
+      return sentiment;
+    }
+
     console.log("============TEST STARTS HERE============")
     for (const review of reviews) {
+      const sentiment = await analyzeSentiment(review.reviewText);  // Await the sentiment analysis result
       const embeddingResponse = await openai.embeddings.create({
         input: review.reviewText,
-        model: 'text-embedding-3-small',
+        model: 'text-embedding-ada-002',
       });
       const embedding = embeddingResponse.data[0].embedding;
+
       processedData.push({
         id: `${professorName}-${Math.random().toString(36).substr(2, 9)}`,  // Unique identifier for each review
         values: embedding,  // The embedding values
@@ -59,20 +75,20 @@ export async function POST(req) {
           review: review.reviewText,
           stars: stars,
           subject: subject,
+          sentiment: sentiment,
         },
       });
     }
 
     // Ensure processedData is an array and pass it correctly
     if (Array.isArray(processedData) && processedData.length > 0) {
-      console.log("EXECUTED")
       await index.upsert(processedData);
     } else {
       throw new Error("No data to upsert into Pinecone.");
     }
 
     const stats = await index.describeIndexStats();
-    console.log(stats)
+    console.log(stats);
 
     return NextResponse.json({ success: true });
   } catch (err) {
