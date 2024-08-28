@@ -1,3 +1,8 @@
+# Rate My Professor with AI
+You can insert a link to a profile on ratemyprofessor.com to get the AI's sentiment analysis and ask questions about the profile in the chat.
+
+Website Link: https://ai-rag-ratemyprofessor.vercel.app/
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
